@@ -16,7 +16,7 @@ func NewRouter() http.Handler {
 	// Auth routes
 	r.Route("/auth", func(r chi.Router) {
 		r.Post("/register", RegisterUserHandler)
-		// r.Post("/login", LoginUserHandler)
+		r.Post("/login", LoginUserHandler)
 	})
 	return r
 }

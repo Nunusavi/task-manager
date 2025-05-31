@@ -6,6 +6,7 @@ import (
 
 	"github.com/nunusavi/task-manager/internal/model"
 	"github.com/nunusavi/task-manager/internal/respository"
+	"github.com/nunusavi/task-manager/internal/utils"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -38,4 +39,32 @@ func RegisterUser(email, password string)(*model.User, error){
 	}
 
 	return user, nil
+}
+
+func LoginUser(email, password string) (string, error) {
+	email = strings.TrimSpace(email)
+	password = strings.TrimSpace(password)
+
+	if email == "" || password == "" {
+		return "", errors.New("email and password are required")
+	}
+
+	user, err := respository.GetUserByEmail(email)
+	if err != nil {
+		return "", errors.New("invalid email or password")
+	}
+
+	// Compare password
+	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
+	if err != nil {
+		return "", errors.New("invalid email or password")
+	}
+
+	// Generate JWT
+	token, err := utils.GenerateJWT(int64(user.ID))
+	if err != nil {
+		return "", errors.New("could not generate token")
+	}
+
+	return token, nil
 }

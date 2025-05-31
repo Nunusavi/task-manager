@@ -9,6 +9,8 @@ require (
 	github.com/go-chi/chi/v5 v5.2.1 // indirect
 	github.com/go-chi/jwtauth/v5 v5.3.3 // indirect
 	github.com/goccy/go-json v0.10.3 // indirect
+	github.com/golang-jwt/jwt/v4 v4.5.2 // indirect
+	github.com/golang-jwt/jwt/v5 v5.2.2 // indirect
 	github.com/jmoiron/sqlx v1.4.0 // indirect
 	github.com/joho/godotenv v1.5.1 // indirect
 	github.com/lestrrat-go/blackmagic v1.0.2 // indirect
