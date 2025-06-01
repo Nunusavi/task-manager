@@ -5,12 +5,12 @@ import (
 	"strings"
 
 	"github.com/nunusavi/task-manager/internal/model"
-	"github.com/nunusavi/task-manager/internal/respository"
+	"github.com/nunusavi/task-manager/internal/repository"
 	"github.com/nunusavi/task-manager/internal/utils"
 	"golang.org/x/crypto/bcrypt"
 )
 
-func RegisterUser(email, password string)(*model.User, error){
+func RegisterUser(email, password string) (*model.User, error) {
 	email = strings.TrimSpace(email)
 	password = strings.TrimSpace(password)
 
@@ -18,23 +18,23 @@ func RegisterUser(email, password string)(*model.User, error){
 		return nil, errors.New("email and password are required")
 	}
 
-	existing, _ := respository.GetUserByEmail(email)
-	if existing != nil{
+	existing, _ := repository.GetUserByEmail(email)
+	if existing != nil {
 		return nil, errors.New("user already exists")
 	}
 
 	hashed, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
-	if err != nil{
+	if err != nil {
 		return nil, errors.New("failed to has password")
 	}
 
 	user := &model.User{
-		Email: email,
+		Email:    email,
 		Password: string(hashed),
 	}
 
-	err = respository.CreateUser(user)
-	if err != nil{
+	err = repository.CreateUser(user)
+	if err != nil {
 		return nil, errors.New("could not save user")
 	}
 
@@ -49,7 +49,7 @@ func LoginUser(email, password string) (string, error) {
 		return "", errors.New("email and password are required")
 	}
 
-	user, err := respository.GetUserByEmail(email)
+	user, err := repository.GetUserByEmail(email)
 	if err != nil {
 		return "", errors.New("invalid email or password")
 	}

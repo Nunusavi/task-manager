@@ -4,18 +4,18 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/nunusavi/task-manager/internal/respository"
 	"github.com/nunusavi/task-manager/internal/config"
 	"github.com/nunusavi/task-manager/internal/handler"
+	"github.com/nunusavi/task-manager/internal/repository"
 )
 
 func main() {
 
 	cfg := config.LoadConfig()
-	respository.InitDB(cfg)
-	
+	repository.InitDB(cfg)
+
 	r := handler.NewRouter()
-	
+
 	log.Println(
 		"server listening on http://localhost:8080",
 	)
